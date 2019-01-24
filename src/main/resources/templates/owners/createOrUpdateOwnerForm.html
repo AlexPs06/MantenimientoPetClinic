@@ -1,21 +1,66 @@
 <html xmlns:th="http://www.thymeleaf.org"
   th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
 
+    
 <body>
+      <style>
+    
+        .contenerdorDireccion{
+              height:450; display: flex;
+              width: 100%;
+              align-items: flex-end;
+              justify-content:  flex-end;
+                  
+        }
+        .divAddress{
+             height: 100%; width: 50%;
+           
+        }
+       
+        .divMap{
+           background-color: green;
+            width: 50%;
+            height:100%;
+        }
+        
+         @media (max-width: 768px) {
+           .divAddress, .divMap{
+                width: 100%;  
+                height: auto;
+            }
+            .contenerdorDireccion{                
+                display: block;
+                height: auto
+            }
 
+        }
+    </style> 
+    
+    <p >Aqyi</p>
   <h2 th:text="#{owner}">Owner</h2>
   <form th:object="${owner}" class="form-horizontal" id="add-owner-form" method="post">
-    <div class="form-group has-feedback">
-      <input
+    <div class="form-group has-feedback" >
+     
+      
+      <div class='contenerdorDireccion'>
+          <div class="divAddress">
+              <input
         th:replace="~{fragments/inputField :: input (#{name}, 'firstName', 'text')}" />
       <input
         th:replace="~{fragments/inputField :: input (#{lastName}, 'lastName', 'text')}" />
-      <input
-        th:replace="~{fragments/inputField :: input (#{address}, 'address', 'text')}" />
+      
       <input
         th:replace="~{fragments/inputField :: input (#{city}, 'city', 'text')}" />
-      <input
-        th:replace="~{fragments/inputField :: input (#{telephone}, 'telephone', 'text')}" />
+      <input th:replace="~{fragments/inputField :: input (#{telephone}, 'telephone', 'text')}" />
+              <input style="" th:replace="~{fragments/inputField :: input (#{address}, 'address', 'text')}" />
+          </div>
+          <div class="divMap">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3823.233661534463!2d-93.09277708598428!3d16.615038228994283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ecd880409d25ff%3A0x16c195d93c8e223f!2sUniversidad+Polit%C3%A9cnica+de+Chiapas!5e0!3m2!1ses!2smx!4v1548020892626" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+          </div>
+      </div>
+      
+      
+      
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
