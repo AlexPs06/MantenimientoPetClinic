@@ -73,3 +73,18 @@ CREATE TABLE IF NOT EXISTS medicaments(
   presentacion VARCHAR(80),
   INDEX(nombre)
 ) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS Rol(
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  rol_name VARCHAR(80)
+) engine=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS users(
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(80),
+  password VARCHAR(80),
+  email VARCHAR(80),
+  rol_id INT(4) UNSIGNED NOT NULL,
+  FOREIGN KEY (rol_id) REFERENCES Rol(id)
+) engine=InnoDB;
