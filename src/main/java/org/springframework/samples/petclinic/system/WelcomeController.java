@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 class WelcomeController {
 
     @GetMapping("/")
+    public String welcomeRoot() {
+        return "welcome";
+    }
+    @GetMapping("/welcome")
     public String welcome() {
         return "welcome";
     }
