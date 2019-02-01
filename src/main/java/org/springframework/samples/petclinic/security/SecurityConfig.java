@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 //import org.springframework.samples.petclinic.users.UserService;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,13 +37,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //auth.userDetailsService(userdetailservice);
-        
+        /*
         auth.inMemoryAuthentication()
         .passwordEncoder(passwordEncoder)
         .withUser("user").password(passwordEncoder.encode("admin")).roles("USER")
         .and()
-        .withUser("admin").password(passwordEncoder.encode("admin")).roles("USER", "ADMIN");
+        .withUser("admin").password(passwordEncoder.encode("admin")).roles("USER", "ADMIN");*/
         //auth.jdbcAuthentication().usersByUsernameQuery("select nombre from users where nombre = ?").authoritiesByUsernameQuery("select rol from users where nombre = ?").dataSource(dataSource);
+        auth
+        .jdbcAuthentication()
+        .dataSource(dataSource)
+        .usersByUsernameQuery("select nombre as principal, password as credentials, activo from users where nombre=?")
+        .authoritiesByUsernameQuery("select nombre as principal, rol as role  from users where nombre=?").rolePrefix("ROLE_").passwordEncoder(passwordEncoder);
         
     }
  
@@ -57,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/login")
             .permitAll()
         .antMatchers("/**")
-            .hasAnyRole("ADMIN", "USER")
+            .hasAnyRole("0","1","TRUE","FALSE")
         .and()
             .formLogin()
             .loginPage("/login")
@@ -73,4 +79,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf()
             .disable();
     }
+    @Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/resources/**","/css/**","/static/**","/images/**","/js/**");
+                
+	}
 }
