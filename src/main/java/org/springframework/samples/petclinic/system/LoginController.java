@@ -42,7 +42,7 @@ public class LoginController {
             errorMessge = "You have been successfully logged out !!";
         }
         model.addAttribute("errorMessge", errorMessge);
-        System.out.println(errorMessge);
+        
         return "/login";
     }
   
