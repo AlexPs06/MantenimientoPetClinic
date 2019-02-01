@@ -86,5 +86,12 @@ CREATE TABLE IF NOT EXISTS users(
   password VARCHAR(80),
   email VARCHAR(80),
   rol_id INT(4) UNSIGNED NOT NULL,
-  FOREIGN KEY (rol_id) REFERENCES Rol(id)
+) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS usersReports(
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(80),
+  password VARCHAR(80),
+  Fecha Date,
+  exitoso Boolean
 ) engine=InnoDB;
